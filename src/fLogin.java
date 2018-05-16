@@ -1,20 +1,22 @@
 import javax.swing.*;
 
-public class FormLogin extends JFrame
+public class fLogin extends JFrame
 {
+    private JPanel mainPanel;
     private JTextField txtID;
     private JButton btnLogin;
     private JButton btnCancel;
-    private JPasswordField txtPwd;
-    private JPanel mainPanel;
     private JButton btnRegister;
     private JButton btnRegisterConfirm;
+    private JPasswordField txtPwd;
 
     private User user=new User();
 
-    public FormLogin()
+    public fLogin()
     {
         InitializeComponent();
+
+        txtID.grabFocus();
 
         btnLogin.addActionListener(e ->
         {
@@ -27,7 +29,12 @@ public class FormLogin extends JFrame
                 user.pwd=String.valueOf(txtPwd.getPassword());
 
                 if (handMsg.login_msg(user))
-                    JOptionPane.showMessageDialog(null,"login success");
+                {
+                    //JOptionPane.showMessageDialog(null,"login success");
+                    formChat chat=new formChat(String.valueOf(user.id));
+                    chat.show();
+                    this.hide();
+                }
                 else
                     JOptionPane.showMessageDialog(null,"login fail");
             }
@@ -43,6 +50,7 @@ public class FormLogin extends JFrame
         });
         btnRegister.addActionListener(e ->
         {
+            txtID.grabFocus();
             txtID.setText("");
             txtPwd.setText("");
 
@@ -56,8 +64,10 @@ public class FormLogin extends JFrame
         {
             try
             {
+                System.out.println(txtPwd.getComponentCount()+"----"+txtID.getText());
+
                 //什么都没有的情况下, txtPwd.getPassword获得的是随机符号...
-                if (txtPwd.getComponentCount()==0 || txtID.getText().equals(""))
+                if (txtPwd.getPassword().toString().equals("") || txtID.getText().equals(""))
                     throw new NumberFormatException("ID 密码, 不可为空");
 
                 user.id=Integer.parseInt(txtID.getText());
@@ -103,9 +113,7 @@ public class FormLogin extends JFrame
         this.setContentPane(this.mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 600);
-        //this.setPreferredSize(new Dimension(800, 600));
         this.setLocation(200,200);
-        //this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
         txtPwd.setEchoChar('*');

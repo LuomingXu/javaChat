@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main
 {
@@ -23,7 +24,14 @@ public class Main
 //                }
 //            }).start();
 
-        new FormLogin();
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");
+        String temp = sdf.format(d);
+        String time="2018-05-16 22:13:49.370";
+        System.out.println(String.valueOf(time));
+        System.out.println(temp.compareTo(time));//temp > time return 1
+        new fLogin();
+        //new formChat("123123");
 
 //            try
 //            {
